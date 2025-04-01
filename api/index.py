@@ -34,7 +34,6 @@ def degrees():
 def parse(expr):
     lhs, rhs = expr.split('=', 1)
     y = Function('y')(x)
-    print("bruh")
     # ✅ Ensure correct parsing and differentiation
     lhs_expr = parse_mathematica(lhs)
     rhs_expr = parse_mathematica(rhs)
@@ -51,7 +50,6 @@ def deriv_conv(expr):
     while index != -1:
         s = expr[index: expr.find(") ", index + 1)]
         s1 = "1"
-        print( s[expr.find(") ", index + 1) - 2])
         if s[s.rfind("(") +1] != 'y':
             s1 = s[s.rfind("(") + 1:s.rfind("y")]
             
@@ -86,7 +84,6 @@ def initial_condition_solver():
         traceback.print_exc()
         return {'error': f'Invalid equation format: {str(e)}'}, 422
     
-    pprint(equation)
     try:
         data["inputs"] = [x for x in data["inputs"] if x]  # Remove empty strings
         data["inputs1"] = [x for x in data["inputs1"] if x]  # Remove empty strings
@@ -112,7 +109,6 @@ def initial_condition_solver():
         sys1.append(Symbol(f"C{i+1}"))
     constants = solve(sys, sys1)
     particular_solution = solution.subs(constants)
-    print(particular_solution)
     return jsonify({'solution': latex(particular_solution)}) 
 
 if __name__ == '__main__':
