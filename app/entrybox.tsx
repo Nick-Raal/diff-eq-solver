@@ -27,7 +27,6 @@ export default function TextEntry() {
             }
         } catch (error) {
             console.error("Error fetching degree:", error);
-            alert("Network error or server is down.");
         }
     };
 
