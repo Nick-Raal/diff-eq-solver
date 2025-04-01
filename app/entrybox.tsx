@@ -76,7 +76,7 @@ export default function TextEntry() {
     };
 
     return (
-        <main className="flex min-h-screen flex-col items-center p-10 bg-gray-900 text-white gap-1">
+        <main className="flex min-h-screen flex-col items-center mt-3 bg-gray-900 text-white gap-1">
             {/* Text Entry Box */}
             <div className="flex space-x-5">
                 <input
