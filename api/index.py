@@ -34,7 +34,7 @@ def degrees():
 def parse(expr):
     lhs, rhs = expr.split('=', 1)
     y = Function('y')(x)
-    # ✅ Ensure correct parsing and differentiation
+    # Ensure correct parsing and differentiation
     lhs_expr = parse_mathematica(lhs)
     rhs_expr = parse_mathematica(rhs)
     lhs_expr = deriv_conv(lhs_expr)
@@ -78,7 +78,7 @@ def initial_condition_solver():
     
     y = Function('y')(x)
     try:
-        equation = parse(equation_str) # ✅ Create a valid SymPy equation
+        equation = parse(equation_str) # Create a valid SymPy equation
     except Exception as e:
         print(e)
         traceback.print_exc()

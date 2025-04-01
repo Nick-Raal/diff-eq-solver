@@ -22,14 +22,13 @@ const InputList: React.FC<{
     };
 
     return (
-        <div className="flex flex-col gap-2 justify-end mt-6">
+        <div className="flex flex-col gap-2  mt-6">
             {Array.from({ length: numInputs }).map((_, index) => (
-                <div key={index} className="flex items-center">
+                <div key={index} className="flex items-center justify-end">
                     <p className="mr-2">y{'\''.repeat(index)}(</p>
                     <input
                         type="text"
-                        placeholder={`Input ${index + 1}`}
-                        className="p-1 border border-gray-300 rounded text-black"
+                        className="p-1 border border-gray-300 rounded text-black w-10"
                         value={inputs[index]}  // Controlled component
                         onChange={(e) => handleChange(index, e)}
                     />
@@ -37,10 +36,9 @@ const InputList: React.FC<{
                     <p className="mr-2">=</p> {/* Add text before input */}
                     <input
                         type="text"
-                        placeholder={`Input ${index + 1}`}
                         value={inputs1[index]} 
                         onChange={(e) => handleChange1(index, e)}
-                        className="p-1 border border-gray-300 rounded text-black"
+                        className="p-1 border border-gray-300 rounded text-black w-10"
                     />
                     <p className="ml-2"></p> {/* Add text after input */}
                 </div>
