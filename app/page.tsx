@@ -16,7 +16,7 @@ export default function Home() {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-between p-5 bg-gray-900 text-white">
         <header className="text-center">
-          <h1 className="text-3xl font-bold font-bold" style={{ fontFamily: 'Comic Sans MS' }}>Initial Value Problem Solver</h1>
+          <h1 className="text-3xl font-bold font-bold">Initial Value Problem Solver</h1>
           <p className="text-lg">By Nicholas Raal</p>
           <p className="text-sm mt-10 text-gray-500">use prime notation for derivatives</p>
         </header>
