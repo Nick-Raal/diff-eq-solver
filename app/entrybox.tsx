@@ -4,6 +4,10 @@ import InputList from "./inputlist";
 import LatexDisplay from "./latexdisplay";
 import GraphComponent from "./graphdisplay";
 
+const API_URL = process.env.NODE_ENV === "development" 
+    ? "http://localhost:3000/api"  // Local dev mode
+    : "/api";  // Production mode (Vercel)
+
 export default function TextEntry() {
     const [text, setText] = useState('');
     const [result, setResult] = useState('');
@@ -20,7 +24,7 @@ export default function TextEntry() {
         if (!text.trim()) return;  // Avoid unnecessary requests for empty input
 
         try {
-            const response = await fetch('http://localhost:5328/degrees', {
+            const response = await fetch('${API_URL}/degrees', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ equation: text }),
@@ -61,7 +65,7 @@ export default function TextEntry() {
         };
 
         try {
-            const response = await fetch('http://localhost:5328/solve', {
+            const response = await fetch('${API_URL}/solve', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend),
