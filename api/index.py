@@ -43,24 +43,35 @@ def parse(expr):
 
 def deriv_conv(expr):
     y = Function('y')(x)
-    expr = str(expr)
+    expr = str(expr) + " "
     index = expr.find("Derivative(")
 
-    result = expr
+    # print(expr)
+    
     while index != -1:
-        s = expr[index: expr.find(") ", index + 1)]
+        s = expr[index: expr.find(") ", index + 1) + 1]
+
+        
         s1 = "1"
         if s[s.rfind("(") +1] != 'y':
             s1 = s[s.rfind("(") + 1:s.rfind("y")]
             
             s1 = parse_mathematica(s1)
 
-            
+
+        n1 = s.count(")")
+
+        
 
         n = s.count("Derivative")
+        
         s = "Derivative(" + str(s1) + f" * y, x, {n}"
-        expr = expr[:index] + s + expr[expr.find(") ", index + 1):]
+    
+        
+        expr = expr[:index] + s  + expr[expr.find(")", index + 1) + n - 1:]
+        
         index = expr.find("Derivative(", index + len(s))
+    print(f"expr : {expr}")
     return sympify(expr).subs(symbols('y'), y)
 
 @app.route('/solve', methods=['POST'])
@@ -96,10 +107,15 @@ def initial_condition_solver():
 
     
     
-    
+    print(equation)
 
-    eqsol = dsolve(equation, y)
-    solution = eqsol.rhs
+    try:
+        eqsol = dsolve(equation, y)
+        solution = eqsol.rhs
+    except Exception as e:
+        return {'error': f'Unable to solve: {str(e)}'}, 400
+
+    
     sys = []
     sys1 = []
     for i in range(len(init)):
