@@ -17,7 +17,7 @@ export default function Home() {
       </Head>
         <main className="flex min-h-screen flex-col items-center justify-between p-5 bg-gray-900 text-white">
           <header className="text-center mb-10 transform translate-y-[-20px] opacity-0 animate-slideDown">
-          <h1 className="text-4xl font-extrabold text-indigo-500 mb-3"><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-white">Initial Value Problem Solver</span></h1>
+          <h1 className="text-4xl font-extrabold text-indigo-500 mb-3"><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-white">Initial Value Problem Solver</span></h1>
           <p className="text-xl font-medium text-gray-300">By Nicholas Raal</p>
           <p className="text-sm mt-5 text-gray-400">Use prime notation for derivatives</p>
         </header>
