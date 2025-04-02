@@ -7,6 +7,10 @@ from sympy import *
 from sympy.abc import x, t
 from sympy.parsing.mathematica import parse_mathematica
 
+import matplotlib.pyplot as plt
+import io
+import base64
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 
@@ -125,7 +129,39 @@ def initial_condition_solver():
         sys1.append(Symbol(f"C{i+1}"))
     constants = solve(sys, sys1)
     particular_solution = solution.subs(constants)
-    return jsonify({'solution': latex(particular_solution)}) 
+    grph = plot_equation(particular_solution)
+    return jsonify({'solution': latex(particular_solution), 'image':grph})
+
+def plot_equation(eq, x_range=(-10, 10)):
+    try:
+        f = lambdify(x, eq, 'numpy')  # Converts SymPy expression to a numpy-compatible function
+
+        # Generate x values for plotting
+        import numpy as np
+        x_vals = np.linspace(x_range[0], x_range[1], 400)
+        y_vals = f(x_vals)  # Get corresponding y values for the plot
+
+        # Create the plot with matplotlib
+        fig, ax = plt.subplots()
+        ax.plot(x_vals, y_vals, label=str(eq))
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_title(f"Plot of the particular solution")
+
+        # Save the plot to a buffer in PNG format
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png", bbox_inches="tight")  # Save plot to buffer (Matplotlib figure)
+        buf.seek(0)
+
+        # Convert buffer content to base64
+        image_base64 = base64.b64encode(buf.read()).decode("utf-8")
+        buf.close()
+
+        # Return the base64 string for embedding in HTML
+        return f"data:image/png;base64,{image_base64}"
+    except Exception as e:
+        print(f"Error: {e}")
+        return "err"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5328)  # Ensure port is 5328

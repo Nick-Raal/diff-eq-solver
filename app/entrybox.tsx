@@ -2,13 +2,18 @@
 import { useState, useEffect } from "react";
 import InputList from "./inputlist";
 import LatexDisplay from "./latexdisplay";
+import GraphComponent from "./graphdisplay";
 
 export default function TextEntry() {
     const [text, setText] = useState('');
     const [result, setResult] = useState('');
     const [solution, setSolution] = useState('');
+    const [checked, setChecked] = useState(true);
+
     const [inputs, setInputs] = useState<string[]>([]);
     const [inputs1, setInputs1] = useState<string[]>([]);
+
+    const [graph, setGraph] = useState('');
 
     // Function to handle fetching degree from backend
     const fetchDegree = async () => {
@@ -65,6 +70,7 @@ export default function TextEntry() {
             const data = await response.json();
             if (response.ok) {
                 setSolution(data.solution);
+                setGraph(data.image);
             }else{
               alert(data.error)
             }
@@ -94,7 +100,15 @@ export default function TextEntry() {
                 </button>
             </div>
 
-            
+            <label className="flex items-center space-x-2 cursor-pointer mt-4">
+                <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => setChecked(!checked)}
+                    className="w-4 h-4 text-blue-500 border-gray-300 rounded"
+                />
+                <span className="text-white">{"Plot? "}</span>
+            </label>
 
             {/* Render InputList if result is a valid number */}
             {parseInt(result) != 0 && !isNaN(parseInt(result)) && (
@@ -109,6 +123,8 @@ export default function TextEntry() {
 
             {/* Display Result */}
             {solution && <LatexDisplay latex = {solution}></LatexDisplay>}
+
+            {checked && solution && <GraphComponent imgSource = {graph} />}
         </main>
     );
 }
