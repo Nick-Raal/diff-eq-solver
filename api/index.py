@@ -159,4 +159,4 @@ def plot_equation(eq, x_range=(-10, 10)):
         return "err"
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5328)  # Ensure port is 5328
+    app.run(debug=True, host='0.0.0.0', port=5328)
