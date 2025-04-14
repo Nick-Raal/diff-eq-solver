@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
 
 equation = None
-@app.route('/degrees', methods=['POST'])  # Ensure POST method is allowed
+@app.route('/api/index/degrees', methods=['POST'])  # Ensure POST method is allowed
 def degrees():
     y = Function('y')(x)
     data = request.json
@@ -61,12 +61,7 @@ def deriv_conv(expr):
             s1 = s[s.rfind("(") + 1:s.rfind("y")]
             
             s1 = parse_mathematica(s1)
-
-
         n1 = s.count(")")
-
-        
-
         n = s.count("Derivative")
         
         s = "Derivative(" + str(s1) + f" * y, x, {n}"
@@ -78,7 +73,7 @@ def deriv_conv(expr):
     print(f"expr : {expr}")
     return sympify(expr).subs(symbols('y'), y)
 
-@app.route('/solve', methods=['POST'])
+@app.route('/api/index/solve', methods=['POST'])
 def initial_condition_solver():
     data = request.json
     equation_str = data.get('equation', '')

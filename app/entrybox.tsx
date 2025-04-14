@@ -20,7 +20,7 @@ export default function TextEntry() {
         if (!text.trim()) return;  // Avoid unnecessary requests for empty input
 
         try {
-            const response = await fetch('http://localhost:5328/degrees', {
+            const response = await fetch('/api/index/solve', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ equation: text }),
@@ -61,7 +61,7 @@ export default function TextEntry() {
         };
 
         try {
-            const response = await fetch('http://localhost:5328/solve', {
+            const response = await fetch('/api/index/solve', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend),
