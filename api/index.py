@@ -11,8 +11,17 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
+import unicodedata
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow all origins
+
+def normalize_input(text):
+    text = text.replace("‘", "'") \
+               .replace("’", "'") \
+               .replace("“", '"') \
+               .replace("”", '"')
+    return text
 
 equation = None
 @app.route('/api/index/degrees', methods=['POST'])  # Ensure POST method is allowed
@@ -36,6 +45,7 @@ def degrees():
         return jsonify({'error': f'Invalid equation format: {str(e)}'}), 400
     
 def parse(expr):
+    expr= normalize_input(expr)
     lhs, rhs = expr.split('=', 1)
     y = Function('y')(x)
     # Ensure correct parsing and differentiation
